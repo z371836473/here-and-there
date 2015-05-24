@@ -6,3 +6,4 @@ First, find out the different number between several numbers that are produced b
 Added soon: The way how to get the particular number; Colorful words;
 Second, this is something related to a circular linked list, I mean the status of several numbers are similar to that, though I don't know what to do with that. Maybe something like a mysterious clock...
 Something more, if Otomadmt sees this, just...change your icon...ermm...it's really a little scary.
+A test.
