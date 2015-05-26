@@ -1,7 +1,9 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<windows.h>
 #include<ctime>
+#include<conio.h>
 #define N 10
 #define M 120
 #define swap(x,y,t) t=x;x=y;y=t;
@@ -9,13 +11,13 @@
 void perm(int *a,int i,int n,int *k,int *b)
 {
     int j,temp,m;
+    //*k=0;
     if (i==n)
     {
         for (b[*k]=0,j=0,m=1;j<=n;j++)
             {
                 b[*k]+=a[n-j]*m;
                 m*=10;
-
             }
             (*k)++;
 
@@ -43,8 +45,8 @@ int getdiff(int *b,int k,int *a,int n)
     int i,m=10,d,c[N],e;
     srand((unsigned)time(0));
     for(i=0;i<N;i++)
-        a[i]=b[rand()%k];//从b中任选10个数
-    e=a[d=rand()%N];//决定要改变的那个数，d用于保存下标
+        a[i]=b[rand()%k];
+    e=a[d=rand()%N];
     i=0;
     while (e)
     {
@@ -68,18 +70,28 @@ int getdiff(int *b,int k,int *a,int n)
 
 int main ()
 {
-    int i,n,a[N],b[M],k=0,d;
+    int i,j=1,n,a[N],b[M],k,d;
+    while(j==1)
+    {
+    k=0;
     random(a,&n);
     perm(a,0,n-1,&k,b);
-    printf("perm(%d)=%d\n",n,k);
     d=getdiff(b,k,a,n);
     for(i=0;i<10;i++)
     printf("%d:%d\n",i+1,a[i]);
     printf("now find out the different number,just input numbers from one to ten:");
     scanf("%d",&i);
     if ((i-1)==d)
-        printf("Correct");
+        {
+            printf("Correct\n\n");
+            Sleep(1000);
+        }
     else
-        printf("The correct answer seems to be %d, look carefully again.",d);
+        {
+            printf("The correct answer seems to be %d, look carefully again.\n\n",d);
+            Sleep(5000);
+        }
+    system("cls");
+    }
     return 0;
 }
