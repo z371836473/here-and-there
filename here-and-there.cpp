@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include<windows.h>
 #include<ctime>
-//#include<conio.h>
+#include<conio.h>
 #define N 10
 #define M 120
 #define swap(x,y,t) t=x;x=y;y=t;
@@ -11,7 +11,7 @@
 void perm(int *a,int i,int n,int *k,int *b)
 {
     int j,temp,m;
-    *k=0;
+    //*k=0;
     if (i==n)
     {
         for (b[*k]=0,j=0,m=1;j<=n;j++)
@@ -73,6 +73,7 @@ int main ()
     int i,j=1,n,a[N],b[M],k,d;
     while(j==1)
     {
+    k=0;
     random(a,&n);
     perm(a,0,n-1,&k,b);
     d=getdiff(b,k,a,n);
@@ -81,11 +82,16 @@ int main ()
     printf("now find out the different number,just input numbers from one to ten:");
     scanf("%d",&i);
     if ((i-1)==d)
-        printf("Correct");
+        {
+            printf("Correct\n\n");
+            Sleep(1000);
+        }
     else
-        printf("The correct answer seems to be %d, look carefully again.\n\n",d);
-    //Sleep(3000);
-    //system("cls");
+        {
+            printf("The correct answer seems to be %d, look carefully again.\n\n",d);
+            Sleep(5000);
+        }
+    system("cls");
     }
     return 0;
 }
