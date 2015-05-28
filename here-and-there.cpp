@@ -11,7 +11,6 @@
 void perm(int *a,int i,int n,int *k,int *b)
 {
     int j,temp,m;
-    //*k=0;
     if (i==n)
     {
         for (b[*k]=0,j=0,m=1;j<=n;j++)
@@ -54,7 +53,7 @@ int getdiff(int *b,int k,int *a,int n)
         e/=m;
         i++;
     }
-    e=c[i=rand()%N];
+    e=c[i=rand()%n];
     do
     {
         c[i]=rand()%9+1;
@@ -68,30 +67,62 @@ int getdiff(int *b,int k,int *a,int n)
     return (d);
 }
 
+int char2int(char *c,int n)
+{
+    int i,m,a;
+    for (i=n,a=0,m=1;i>=0;i--)
+    {
+        a+=m*(c[i]-48);
+        m*=10;
+    }
+    return (a);
+}
+
 int main ()
 {
-    int i,j=1,n,a[N],b[M],k,d;
+    int i=0,j=1,n,a[N],b[M],k,d,coin;FILE *fp;char c[4];
+    if ((fp=fopen("coin.txt","r+"))==NULL)
+    {
+        printf("error");
+        exit(0);
+    }
+    c[i]=fgetc(fp);
+    while (!feof(fp))
+    {
+        i++;
+        c[i]=fgetc(fp);
+    }
+    if (i==0)
+        coin=0;
+    else
+        coin=char2int(c,i-1);
+    fseek(fp,0,0);
+    fprintf(fp,"%d",coin+1);//bug1：第一次使用fprint无效，故在这里处理一下
     while(j==1)
     {
     k=0;
+    printf("Your coins:%d\n",coin);
     random(a,&n);
     perm(a,0,n-1,&k,b);
     d=getdiff(b,k,a,n);
     for(i=0;i<10;i++)
-    printf("%d:%d\n",i+1,a[i]);
-    printf("now find out the different number,just input numbers from one to ten:");
+    printf("%d:%d\n",i,a[i]);
+    printf("Now find out the different number,just input numbers from one to ten:",d);
     scanf("%d",&i);
-    if ((i-1)==d)
+    if ((i)==d)
         {
             printf("Correct\n\n");
-            Sleep(1000);
+            coin++;
+            fseek(fp,0,0);
+            fprintf(fp,"%d",coin+1);//bug2:直接用coin始终少1
+            Sleep(500);
         }
     else
-        {
-            printf("The correct answer seems to be %d, look carefully again.\n\n",d);
-            Sleep(5000);
+        {   printf("The correct answer seems to be %d, look carefully again.\n\n",d);//直接输出正确答案测试用
+            Sleep(3000);
         }
     system("cls");
     }
+    fclose(fp);
     return 0;
 }
