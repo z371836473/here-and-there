@@ -83,8 +83,9 @@ int main ()
     int i=0,j=1,n,a[N],b[M],k,d,coin;FILE *fp;char c[4];
     if ((fp=fopen("coin.txt","r+"))==NULL)
     {
-        printf("error");
-        exit(0);
+        fp=fopen("coin.txt","w+");
+        //fclose(fp);
+        fp=fopen("coin.txt","r+");
     }
     c[i]=fgetc(fp);
     while (!feof(fp))
@@ -107,18 +108,19 @@ int main ()
     d=getdiff(b,k,a,n);
     for(i=0;i<10;i++)
     printf("%d:%d\n",i,a[i]);
-    printf("Now find out the different number,just input numbers from one to ten:",d);
+    printf("Now find out the different number,just input numbers from one to ten:",d);//直接输出正确答案测试用
     scanf("%d",&i);
     if ((i)==d)
         {
             printf("Correct\n\n");
             coin++;
-            fseek(fp,0,0);
+            fseek(fp,0,0);//bug4:可以只输入文件一次，但是必须两次fseek；bug5:在while j==1的循环体中没有调用fprint但是文件依然被改写，但是当测试数据为6时重新启动程序只有3的金币，使用下面的fprintf则恢复正常
+            //printf("%d",ftell(fp));
             fprintf(fp,"%d",coin+1);//bug2:直接用coin始终少1
             Sleep(500);
         }
     else
-        {   printf("The correct answer seems to be %d, look carefully again.\n\n",d);//直接输出正确答案测试用
+        {   printf("The correct answer seems to be %d, look carefully again.\n\n",d);
             Sleep(3000);
         }
     system("cls");
