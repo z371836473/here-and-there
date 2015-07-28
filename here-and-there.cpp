@@ -78,9 +78,9 @@ int char2int(char *c,int n)
     return (a);
 }
 
-int main ()
+void g1 ()
 {
-    int i=0,j=1,n,a[N],b[M],k,d,coin;FILE *fp;char c[4];
+    int i=0,j=1,n,a[N],b[M],k,d,coin;FILE *fp;char c[4],cmd;
     if ((fp=fopen("coin.txt","r+"))==NULL)
     {
         fp=fopen("coin.txt","w+");
@@ -109,8 +109,10 @@ int main ()
     for(i=0;i<10;i++)
     printf("%d:%d\n",i,a[i]);
     printf("Now find out the different number,just input numbers from one to ten:",d);//直接输出正确答案测试用
-    scanf("%d",&i);
-    if ((i)==d)
+    scanf("%c",&cmd);
+    if ((cmd>='0')&(cmd<='9'))
+    {
+        if ((cmd-48)==d)
         {
             printf("Correct\n\n");
             coin++;
@@ -119,12 +121,26 @@ int main ()
             fprintf(fp,"%d",coin+1);//bug2:直接用coin始终少1
             Sleep(500);
         }
-    else
-        {   printf("The correct answer seems to be %d, look carefully again.\n\n",d);
+        else
+        {
+            printf("The correct answer seems to be %d, look carefully again.\n\n",d);
             Sleep(3000);
         }
+    }
+    else
+    {
+        switch(cmd)
+        {
+        case('e'):{j=0;break;}
+        default:;
+        }
+    }
     system("cls");
     }
     fclose(fp);
+}
+int main()
+{
+    g1();
     return 0;
 }
